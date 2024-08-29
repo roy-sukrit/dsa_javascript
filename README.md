@@ -1,1 +1,1 @@
-# DSA Sukrit - Using JAVA
+# DSA Sukrit - Using JS
