@@ -116,12 +116,13 @@ class LinkedList {
     }
 
 
-    checkPalindrome() {
+    reOrderList() {
 
         //Finding Middle Node
         let slow = this.head;
         let fast = this.head;
         let firstHead = this.head;
+        let temp;
 
 
         let length = 0;
@@ -132,22 +133,29 @@ class LinkedList {
         }
 
         let secondHead = this.reverse(slow);
-        let rereversHead = secondHead;
+        // let rereversHead = secondHead;
         //This will give another list 
 
-        while (length) {
+        while (firstHead !== null && secondHead !== null) {
 
-            if (firstHead.value !== secondHead.value) {        this.reverse(rereversHead);
-                return false }
+            console.log("firstHead",firstHead);
+            console.log("secondHead",secondHead);
 
-            firstHead = firstHead.next;
-            secondHead = secondHead.next;
+            //For 1st Head
+            temp = firstHead.next;
+            firstHead.next= secondHead;
+            firstHead = temp;
 
-            length--;
-        }
+            //For 2nd Head
+            temp = secondHead.next;
+            secondHead.next = firstHead;
+            secondHead = temp
 
-        this.reverse(rereversHead);
-        return true;
+
+            }
+
+       
+        return this;
 
 
 
@@ -155,6 +163,9 @@ class LinkedList {
 
     }
  
+
+
+
     reverse(head) {
         let previous = null, curr = head, next;
         while (curr) {
@@ -172,15 +183,15 @@ class LinkedList {
 
 let myLinkedList = new LinkedList(1);
 myLinkedList.push(2);
-myLinkedList.push(2);
-myLinkedList.push(2);
-myLinkedList.push(1);
+myLinkedList.push(3);
+myLinkedList.push(4);
+myLinkedList.push(5);
 
 console.log("Original list:");
 myLinkedList.printList();
 
-console.log(myLinkedList.checkPalindrome());
-console.log(`\nList after checking Palindrome`);
+console.log(myLinkedList.reOrderList());
+console.log(`\nList after reOrdering==>`);
 
 myLinkedList.printList();
 
