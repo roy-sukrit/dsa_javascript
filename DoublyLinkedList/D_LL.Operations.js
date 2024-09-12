@@ -106,46 +106,97 @@ class DoublyLinkedList {
         return temp;
     }
     
-	/// WRITE GET METHOD HERE ///
-	//                         //
-	//                         //
-	//                         //
-	//                         //
-	/////////////////////////////
+    get(index) {
+        if (index < 0 || index >= this.length) return undefined;
+        let temp = this.head;
+        if (index < this.length/2) {
+            for (let i = 0; i < index; i++) { 
+                temp = temp.next;
+            }
+        } else {
+            temp = this.tail;
+            for (let i = this.length - 1; i > index; i--) { 
+                temp = temp.prev;
+            }
+        }
+        return temp;
+    }
+
+    set(index, value) {
+        let temp = this.get(index);
+        if (temp) {
+            temp.value = value;
+            return true;
+        }
+        return false;
+    }
+
+    insert(index, value) {
+        if (index < 0 || index > this.length) return false;
+        if (index === this.length) return this.push(value);
+        if (index === 0) return this.unshift(value);
+        
+        const newNode = new Node(value);
+        const before = this.get(index - 1);
+        const after = before.next;
+        before.next = newNode;
+        newNode.prev = before;
+        newNode.next = after;
+        after.prev = newNode;
+        this.length++;
+        return true;
+    }
+
+	/// WRITE REMOVE METHOD HERE ///
+	//                            //
+	//                            //
+	//                            //
+	//                            //
+	////////////////////////////////
 	
-	get(index){
+	remove(index){
 	    
-	    if(index <0  || index >= this.length){
+	    let head = this.head;
+	    let tail = this.tail;
+	    
+	    
+	    if(this.length ===0){
 	        return undefined;
 	    }
 	    
 	    
-	    let middle = this.length/2;
-	    if(index > middle){
-	        
-	        let last = this.tail;
-	        
-	        for(let i = this.length -1  ; i > index; i--){
-	            
-	            last = last.prev;
-	            
-	        }
-	        
-	        return last;
-	        
+	    if(index === 0){
+	        this.shift();
+	        return head;
 	    }
-	    else{
-	        
 	    
-	      let start = this.head;
+	    if(index === this.length-1){
+	        this.pop();
+	        return tail;
 	        
-	        for(let i =0 ; i<index; i++){
-	            start=start.next
-	        }
-	        
-	        return start;
 	    }
-	        
+	    
+	    if(index<0 || index >=this.length){
+	        return undefined;
+	    }
+	    
+	    let nodeToRemove = this.get(index);
+	    
+	    let before = this.get(index-1);
+	    
+	    let after = nodeToRemove.next;
+	    
+	    before.next = after;
+	    
+	    after.prev = before;
+	    
+	    nodeToRemove.prev = null;
+	    nodeToRemove.next = null;
+	    
+	    
+	    
+	    this.length --;
+	    return nodeToRemove;
 	    
 	}
 
@@ -153,17 +204,60 @@ class DoublyLinkedList {
  
 
 
-let myDLL = new DoublyLinkedList(0);
-myDLL.push(1);
+let myDLL = new DoublyLinkedList(1);
 myDLL.push(2);
 myDLL.push(3);
+myDLL.push(4);
+myDLL.push(5);
 
-console.log(myDLL.get(3).value);
+console.log("DLL before remove():");
+myDLL.printList();
 
- 
+console.log("\nRemoved node:");
+console.log(myDLL.remove(2).value);
+console.log("DLL after remove() in middle:");
+myDLL.printList();
+
+console.log("\nRemoved node:");
+console.log(myDLL.remove(0).value);
+console.log("DLL after remove() of first node:");
+myDLL.printList();
+
+console.log("\nRemoved node:");
+console.log(myDLL.remove(2).value);
+console.log("DLL after remove() of last node:");
+myDLL.printList();
+
+
 /*
     EXPECTED OUTPUT:
     ----------------
+    DLL before remove():
+    1
+    2
     3
+    4
+    5
+
+    Removed node:
+    3
+    DLL after remove() in middle:
+    1
+    2
+    4
+    5
+
+    Removed node:
+    1
+    DLL after remove() of first node:
+    2
+    4
+    5
+
+    Removed node:
+    5
+    DLL after remove() of last node:
+    2
+    4
 
 */
