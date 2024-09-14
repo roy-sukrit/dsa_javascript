@@ -1,11 +1,11 @@
 class Node {
-    constructor(value) {
+    constructor(value){
         this.value = value;
         this.next = null;
         this.prev = null;
     }
 }
-
+ 
 class DoublyLinkedList {
     constructor(value) {
         const newNode = new Node(value);
@@ -47,8 +47,8 @@ class DoublyLinkedList {
         this.tail = null;
         this.length = 0;
     }
-
-    push(value) {
+ 
+    push(value){
         const newNode = new Node(value);
         if (this.length === 0) {
             this.head = newNode;
@@ -62,30 +62,67 @@ class DoublyLinkedList {
         return this;
     }
 
-    // WRITE THE REVERSE METHOD HERE //
-    //                               //
-    //                               //
-    //                               //
-    //                               //
-    ///////////////////////////////////
+    // WRITE THE ISPALINDROME METHOD HERE //
+    //                                    //
+    //                                    //
+    //                                    //
+    //                                    //
+    ////////////////////////////////////////
 
-    reverse() {
 
-        let curr = this.head;
+    // Work Needed 10:27 pm Sat
+   isPalindrome() {
+
+    if (this.length <= 1) return true; // An empty list or single element list is a palindrome
+
+    //Finding Midpoint First
+    let slow = this.head;
+    let fast = this.head;
+
+    while (fast && fast.next ) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+
+    console.log("Middle Node is =>",slow);
+
+
+    let firstHead = this.head;
+
+    let secondHead = this.reverse(slow);
+    let rereverseHead = secondHead;
+    let i = 0;
+    while( secondHead) {
+        if(firstHead.value !== secondHead.value) {
+            this.reverse(secondHead);
+            return false;
+        }
+
+        firstHead = firstHead.next;
+        secondHead = secondHead.next;
+
+        i++;
+    }
+
+    this.reverse(rereverseHead);
+
+    return true;
+}
+
+
+    reverse(head) {
+        let curr = head;
         let before = null;
-
-        while (curr !== null) {
+    
+        while (curr && curr !== null) {
             before = curr.prev;
             curr.prev = curr.next;
             curr.next = before;
             curr = curr.prev;
         }
-        let temp = this.head;
-        this.head = this.tail;
-        this.tail = temp;
-
+   
+        return before;
     }
-
 }
 
 
@@ -93,59 +130,39 @@ class DoublyLinkedList {
 let myDoublyLinkedList = new DoublyLinkedList(1);
 myDoublyLinkedList.push(2);
 myDoublyLinkedList.push(3);
-myDoublyLinkedList.push(4);
-myDoublyLinkedList.push(5);
+myDoublyLinkedList.push(2);
+myDoublyLinkedList.push(1);
 
-console.log("Original list:");
+console.log("List 1:");
 myDoublyLinkedList.printList();
+console.log("Is List 1 a palindrome? " + myDoublyLinkedList.isPalindrome());
 
-myDoublyLinkedList.reverse();
-console.log("\nList after reversing:");
-myDoublyLinkedList.printList();
-
-// Create a new list with an even number of elements
 let myDoublyLinkedList2 = new DoublyLinkedList(1);
 myDoublyLinkedList2.push(2);
 myDoublyLinkedList2.push(3);
 myDoublyLinkedList2.push(4);
 myDoublyLinkedList2.push(5);
-myDoublyLinkedList2.push(6);
 
-console.log("\nOriginal list 2:");
+console.log("\nList 2:");
 myDoublyLinkedList2.printList();
-
-myDoublyLinkedList2.reverse();
-console.log("\nList 2 after reversing:");
-myDoublyLinkedList2.printList();
-
+console.log("Is List 2 a palindrome? " + myDoublyLinkedList2.isPalindrome());
 
 /*
     EXPECTED OUTPUT:
     ----------------
-    Original list:
+    List 1:
+    1
+    2
+    3
+    2
+    1
+    Is List 1 a palindrome? true
+
+    List 2:
     1
     2
     3
     4
     5
-    List after reversing:
-    5
-    4
-    3
-    2
-    1
-    Original list 2:
-    1
-    2
-    3
-    4
-    5
-    6
-    List 2 after reversing:
-    6
-    5
-    4
-    3
-    2
-    1
+    Is List 2 a palindrome? false
 */
