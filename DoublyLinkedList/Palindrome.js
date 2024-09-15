@@ -110,19 +110,46 @@ class DoublyLinkedList {
 }
 
 
-    reverse(head) {
+    reverse_old(head) {
         let curr = head;
-        let before = null;
+        let before,after;
+
+        console.log("Reverse curr =>",curr);
     
         while (curr && curr !== null) {
             before = curr.prev;
+            after = curr.next; 
             curr.prev = curr.next;
             curr.next = before;
             curr = curr.prev;
         }
+
+        console.log("Reverse before =>",before);
    
         return before;
     }
+
+    reverse(head) {
+        let curr = head;
+        let prev = null;
+    
+        // Traverse the list and reverse the links
+        while (curr !== null) {
+            // Swap the previous and next pointers
+            let next = curr.next;
+            curr.next = prev;
+            curr.prev = next; // Need to reverse the prev pointer too
+    
+            // Move to the next node
+            prev = curr;
+            curr = next;
+        }
+    
+        // The 'prev' will be the new head of the reversed section
+        return prev;
+    }
+
+
 }
 
 
