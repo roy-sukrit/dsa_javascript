@@ -1,0 +1,19 @@
+Insert 
+
+create newNode
+if root === null then root = newNode
+let temp = this.root
+while loop
+if newNode === temp return undefined
+if ‹ left else › right
+if null insert newNode else move to next
+
+Contains
+
+if root === null return false
+let temp = this. root
+while (temp)
+if < left
+else if › right
+else = return true
+return false
