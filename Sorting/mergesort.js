@@ -29,19 +29,21 @@ function merge(array1, array2) {
 //                               //
 ///////////////////////////////////
 
+function mergeSort(arr){
+    
+    if(arr.length ==1) return arr;
+    let midIndex = Math.floor(arr.length/2);
+    let left = mergeSort(arr.slice(0,midIndex));
+    let right = mergeSort(arr.slice(midIndex));
+    return merge(left,right)
 
-
-
-function test() {
-    let originalArray = [3,1,4,2];
-    let sortedArray = mergeSort( originalArray );
-
-    console.log( "Original Array:", originalArray );
-    console.log( "\nSorted Array:", sortedArray );
 }
 
+let originalArray = [3,1,4,2];
+let sortedArray = mergeSort( originalArray );
 
-test();
+console.log( "Original Array:", originalArray );
+console.log( "\nSorted Array:", sortedArray );
 
 
 /*
